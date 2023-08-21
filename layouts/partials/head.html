@@ -23,8 +23,8 @@
 {{ else }}
   <!-- Theme Variables -->
   {{ $colorCss := resources.Get (printf "css/color/%s.scss" ($.Site.Params.ThemeColor | default "orange")) }}
-  {{ $css := slice $colorCss $defaultStyles | resources.Concat "css/base.scss" }}
-  {{ $options := (dict "targetPath" "styles.css" "outputStyle" "compressed" "enableSourceMap" true "precision" 6 "includePaths" (slice "node_modules")) }}
+  {{ $css := slice $colorCss $defaultStyles | resources.Concat (printf "css/%s-local.scss" $.Site.Params.ThemeColor) }}
+  {{ $options := (dict "targetPath" (printf "styles-%s.css" $.Site.Params.ThemeColor) "outputStyle" "compressed" "enableSourceMap" true "precision" 6 "includePaths" (slice "node_modules")) }}
   {{ $styles := $css | resources.ToCSS $options }}
   <link rel="stylesheet" href="{{ $styles.Permalink }}">
 {{ end }}
